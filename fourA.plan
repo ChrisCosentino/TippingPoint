@@ -1,0 +1,131 @@
+DB2 Universal Database Version 11.1, 5622-044 (c) Copyright IBM Corp. 1991, 2015
+Licensed Material - Program Property of IBM
+IBM DB2 Universal Database SQL and XQUERY Explain Tool
+
+******************** DYNAMIC ***************************************
+
+==================== STATEMENT ==========================================
+
+	Isolation Level          = Cursor Stability
+	Blocking                 = Block All Cursors
+	Query Optimization Class = 5
+
+	Partition Parallel       = No
+	Intra-Partition Parallel = No
+
+	SQL Path                 = "SYSIBM", "SYSFUN", "SYSPROC", "SYSIBMADM", 
+                                   "CHRISCOS"
+
+
+Statement:
+  
+  select C.cust# 
+  from stl.customer C, stl.purchase P, stl.book B 
+  where C.cust# =P.cust# and B.book# =P.book# and C.city ='Rochester'
+          and B.price > 100
+
+
+Section Code Page = 1208
+
+Estimated Cost = 72255.484375
+Estimated Cardinality = 122727.164062
+
+Access Table Name = STL.BOOK  ID = 2,258
+|  #Columns = 1
+|  Skip Inserted Rows
+|  Avoid Locking Committed Data
+|  Currently Committed for Cursor Stability
+|  May participate in Scan Sharing structures
+|  Scan may start anywhere and wrap, for completion
+|  Fast scan, for purposes of scan sharing management
+|  Scan can be throttled in scan sharing management
+|  Relation Scan
+|  |  Prefetch: Eligible
+|  Lock Intents
+|  |  Table: Intent Share
+|  |  Row  : Next Key Share
+|  Sargable Predicate(s)
+|  |  #Predicates = 1
+|  |  Process Build Table for Hash Join
+Hash Join
+|  Early Out: Single Match Per Outer Row
+|  Estimated Build Size: 496000 
+|  Estimated Probe Size: 9136000
+|  Access Table Name = STL.CUSTOMER  ID = 2,257
+|  |  #Columns = 1
+|  |  Skip Inserted Rows
+|  |  Avoid Locking Committed Data
+|  |  Currently Committed for Cursor Stability
+|  |  May participate in Scan Sharing structures
+|  |  Scan may start anywhere and wrap, for completion
+|  |  Fast scan, for purposes of scan sharing management
+|  |  Scan can be throttled in scan sharing management
+|  |  Relation Scan
+|  |  |  Prefetch: Eligible
+|  |  Lock Intents
+|  |  |  Table: Intent Share
+|  |  |  Row  : Next Key Share
+|  |  Sargable Predicate(s)
+|  |  |  #Predicates = 1
+|  |  |  Process Build Table for Hash Join
+|  Hash Join
+|  |  Early Out: Single Match Per Outer Row
+|  |  Estimated Build Size: 168000 
+|  |  Estimated Probe Size: 202992000
+|  |  Bit Filter Size: 9600
+|  |  Access Table Name = STL.PURCHASE  ID = 2,259
+|  |  |  #Columns = 2
+|  |  |  Skip Inserted Rows
+|  |  |  Avoid Locking Committed Data
+|  |  |  Currently Committed for Cursor Stability
+|  |  |  May participate in Scan Sharing structures
+|  |  |  Scan may start anywhere and wrap, for completion
+|  |  |  Fast scan, for purposes of scan sharing management
+|  |  |  Scan can be throttled in scan sharing management
+|  |  |  Relation Scan
+|  |  |  |  Prefetch: Eligible
+|  |  |  Lock Intents
+|  |  |  |  Table: Intent Share
+|  |  |  |  Row  : Next Key Share
+|  |  |  Sargable Predicate(s)
+|  |  |  |  Process Probe Table for Hash Join
+Return Data to Application
+|  #Columns = 1
+
+End of section
+
+
+Optimizer Plan:
+
+                  Rows   
+                Operator 
+                  (ID)   
+                  Cost   
+                        
+                122727  
+                RETURN  
+                 ( 1)   
+                72255.5 
+                  |     
+                122727  
+                HSJOIN  
+                 ( 2)   
+                72255.5 
+               /       \
+        454873         13490.3 
+        HSJOIN         TBSCAN  
+         ( 3)           ( 6)   
+        71588          646.586 
+       /      \          |    
+ 9.9972e+06    4550    50000  
+   TBSCAN     TBSCAN   Table: 
+    ( 4)       ( 5)    STL    
+  70101.9     1081.34  BOOK   
+     |          |     
+ 9.9972e+06   100000  
+ Table:      Table:   
+ STL         STL      
+ PURCHASE    CUSTOMER 
+
+
+

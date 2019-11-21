@@ -1,0 +1,122 @@
+DB2 Universal Database Version 11.1, 5622-044 (c) Copyright IBM Corp. 1991, 2015
+Licensed Material - Program Property of IBM
+IBM DB2 Universal Database SQL and XQUERY Explain Tool
+
+******************** DYNAMIC ***************************************
+
+==================== STATEMENT ==========================================
+
+	Isolation Level          = Cursor Stability
+	Blocking                 = Block All Cursors
+	Query Optimization Class = 5
+
+	Partition Parallel       = No
+	Intra-Partition Parallel = No
+
+	SQL Path                 = "SYSIBM", "SYSFUN", "SYSPROC", "SYSIBMADM", 
+                                   "CHRISCOS"
+
+
+Statement:
+  
+  select cust# 
+  from stl.purchase 
+  where sale =35.85 and 
+  when ='08/16/2012' 
+
+
+Section Code Page = 1208
+
+Estimated Cost = 753.014893
+Estimated Cardinality = 0.285625
+
+Access Table Name = STL.PURCHASE  ID = 2,259
+|  Index Scan:  Name = STL.PURCHASE_WHEN_INDEX  ID = 3
+|  |  Regular Index (Not Clustered)
+|  |  Index Columns:
+|  |  |  1: WHEN (Ascending)
+|  #Columns = 0
+|  Skip Inserted Rows
+|  Avoid Locking Committed Data
+|  Currently Committed for Cursor Stability
+|  #Key Columns = 1
+|  |  Start Key: Inclusive Value
+|  |  |  1: 2012-08-16 
+|  |  Stop Key: Inclusive Value
+|  |  |  1: 2012-08-16 
+|  Index-Only Access
+|  Index Prefetch: Sequential(13), Readahead
+|  Isolation Level: Uncommitted Read
+|  Lock Intents
+|  |  Table: Intent None
+|  |  Row  : None
+|  Sargable Index Predicate(s)
+|  |  Insert Into Integer Sorted Temp Table  ID = t1
+|  |  |  #Columns = 1
+|  |  |  #Sort Key Columns = 1
+|  |  |  |  Key 1: (Ascending)
+|  |  |  Sortheap Allocation Parameters:
+|  |  |  |  #Rows     = 4492.000000
+|  |  |  |  Row Width = 20
+|  |  |  Duplicate Elimination
+Integer Sorted Temp Table Completion  ID = t1
+List Prefetch Preparation
+|  Access Table Name = STL.PURCHASE  ID = 2,259
+|  |  #Columns = 1
+|  |  Skip Inserted Rows
+|  |  Avoid Locking Committed Data
+|  |  Currently Committed for Cursor Stability
+|  |  RID List Fetch Scan
+|  |  Fetch Using Prefetched List
+|  |  |  Prefetch: 719 Pages
+|  |  Lock Intents
+|  |  |  Table: Intent Share
+|  |  |  Row  : Next Key Share
+|  |  Sargable Predicate(s)
+|  |  |  #Predicates = 2
+|  |  |  Return Data to Application
+|  |  |  |  #Columns = 1
+Return Data Completion
+
+End of section
+
+
+Optimizer Plan:
+
+               Rows   
+             Operator 
+               (ID)   
+               Cost   
+                      
+             0.285625 
+              RETURN  
+               ( 1)   
+             753.015  
+                |     
+             0.285625 
+              FETCH   
+               (--)   
+             753.015  
+            /        \
+       4491.9   9.9972e+06 
+       RIDSCN   Table:     
+        ( 3)    STL        
+       108.852  PURCHASE   
+         |     
+       4491.9  
+        SORT   
+        ( 4)   
+       108.852 
+         |     
+       4491.9  
+       IXSCAN  
+        ( 5)   
+       107.379 
+         |           
+        2192         
+ Index:              
+ STL                 
+ PURCHASE_WHEN_INDEX 
+
+
+

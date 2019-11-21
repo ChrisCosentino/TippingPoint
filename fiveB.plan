@@ -1,0 +1,146 @@
+DB2 Universal Database Version 11.1, 5622-044 (c) Copyright IBM Corp. 1991, 2015
+Licensed Material - Program Property of IBM
+IBM DB2 Universal Database SQL and XQUERY Explain Tool
+
+******************** DYNAMIC ***************************************
+
+==================== STATEMENT ==========================================
+
+	Isolation Level          = Cursor Stability
+	Blocking                 = Block All Cursors
+	Query Optimization Class = 5
+
+	Partition Parallel       = No
+	Intra-Partition Parallel = No
+
+	SQL Path                 = "SYSIBM", "SYSFUN", "SYSPROC", "SYSIBMADM", 
+                                   "CHRISCOS"
+
+
+Statement:
+  
+  select sum(P.sale)
+  from stl.customer C, stl.purchase P, stl.book B 
+  where C.cust# =P.cust# and B.book# =P.book# and B.price > 10 
+  group by P.book#, C.cust#
+
+
+Section Code Page = 1208
+
+Estimated Cost = 84911.132812
+Estimated Cardinality = 8572671.000000
+
+Access Table Name = STL.PURCHASE  ID = 2,259
+|  #Columns = 3
+|  Skip Inserted Rows
+|  Avoid Locking Committed Data
+|  Currently Committed for Cursor Stability
+|  May participate in Scan Sharing structures
+|  Scan may start anywhere and wrap, for completion
+|  Fast scan, for purposes of scan sharing management
+|  Scan can be throttled in scan sharing management
+|  Relation Scan
+|  |  Prefetch: Eligible
+|  Lock Intents
+|  |  Table: Intent Share
+|  |  Row  : Next Key Share
+|  Sargable Predicate(s)
+|  |  Insert Into Sorted Temp Table  ID = t1
+|  |  |  #Columns = 3
+|  |  |  #Sort Key Columns = 2
+|  |  |  |  Key 1: BOOK# (Ascending)
+|  |  |  |  Key 2: CUST# (Ascending)
+|  |  |  Sortheap Allocation Parameters:
+|  |  |  |  #Rows     = 9997204.000000
+|  |  |  |  Row Width = 16
+|  |  |  Piped
+Sorted Temp Table Completion  ID = t1
+Access Temp Table  ID = t1
+|  #Columns = 3
+|  Relation Scan
+|  |  Prefetch: Eligible
+Merge Join
+|  Early Out: Single Match Per Outer Row
+|  Access Table Name = STL.BOOK  ID = 2,258
+|  |  #Columns = 1
+|  |  Skip Inserted Rows
+|  |  Avoid Locking Committed Data
+|  |  Currently Committed for Cursor Stability
+|  |  May participate in Scan Sharing structures
+|  |  Scan may start anywhere and wrap, for completion
+|  |  Fast scan, for purposes of scan sharing management
+|  |  Scan can be throttled in scan sharing management
+|  |  Relation Scan
+|  |  |  Prefetch: Eligible
+|  |  Lock Intents
+|  |  |  Table: Intent Share
+|  |  |  Row  : Next Key Share
+|  |  Sargable Predicate(s)
+|  |  |  #Predicates = 1
+|  |  |  Insert Into Integer Sorted Temp Table  ID = t2
+|  |  |  |  #Columns = 1
+|  |  |  |  #Sort Key Columns = 1
+|  |  |  |  |  Key 1: BOOK# (Ascending)
+|  |  |  |  Sortheap Allocation Parameters:
+|  |  |  |  |  #Rows     = 49982.000000
+|  |  |  |  |  Row Width = 8
+|  Integer Sorted Temp Table Completion  ID = t2
+|  Access Temp Table  ID = t2
+|  |  #Columns = 1
+|  |  Relation Scan
+|  |  |  Prefetch: Eligible
+Aggregation
+|  Group By
+|  Column Function(s)
+Return Data to Application
+|  #Columns = 1
+
+End of section
+
+
+Optimizer Plan:
+
+        Rows   
+      Operator 
+        (ID)   
+        Cost   
+                
+    8.57267e+06 
+      RETURN    
+       ( 1)     
+      84911.1   
+        |       
+    8.57267e+06 
+       GRPBY    
+       ( 2)     
+      84010.2   
+        |       
+    9.99356e+06 
+      MSJOIN    
+       ( 3)     
+       83377    
+   /           \
+ 9.9972e+06     * 
+   TBSCAN      |     
+    ( 4)     49981.8 
+  81523.8    TBSCAN  
+     |        ( 8)   
+ 9.9972e+06  668.712 
+    SORT       |     
+    ( 5)     49981.8 
+  81523.8     SORT   
+     |        ( 9)   
+ 9.9972e+06  668.711 
+   TBSCAN      |     
+    ( 6)     49981.8 
+  70101.9    TBSCAN  
+     |        (10)   
+ 9.9972e+06  646.586 
+ Table:        |    
+ STL         50000  
+ PURCHASE    Table: 
+             STL    
+             BOOK   
+
+
+

@@ -1,0 +1,103 @@
+DB2 Universal Database Version 11.1, 5622-044 (c) Copyright IBM Corp. 1991, 2015
+Licensed Material - Program Property of IBM
+IBM DB2 Universal Database SQL and XQUERY Explain Tool
+
+******************** DYNAMIC ***************************************
+
+==================== STATEMENT ==========================================
+
+	Isolation Level          = Cursor Stability
+	Blocking                 = Block All Cursors
+	Query Optimization Class = 5
+
+	Partition Parallel       = No
+	Intra-Partition Parallel = No
+
+	SQL Path                 = "SYSIBM", "SYSFUN", "SYSPROC", "SYSIBMADM", 
+                                   "CHRISCOS"
+
+
+Statement:
+  
+  select B.book# 
+  from stl.book B, stl.purchase P 
+  where B.book# =P.book# and B.price=55.15
+
+
+Section Code Page = 1208
+
+Estimated Cost = 824.458679
+Estimated Cardinality = 2610.986328
+
+Access Table Name = STL.BOOK  ID = 2,258
+|  #Columns = 1
+|  Skip Inserted Rows
+|  Avoid Locking Committed Data
+|  Currently Committed for Cursor Stability
+|  May participate in Scan Sharing structures
+|  Scan may start anywhere and wrap, for completion
+|  Scan can be throttled in scan sharing management
+|  Relation Scan
+|  |  Prefetch: Eligible
+|  Lock Intents
+|  |  Table: Intent Share
+|  |  Row  : Next Key Share
+|  Sargable Predicate(s)
+|  |  #Predicates = 1
+Nested Loop Join
+|  Access Table Name = STL.PURCHASE  ID = 2,259
+|  |  Index Scan:  Name = STL.PURCHASE_BOOK#_INDEX  ID = 2
+|  |  |  Regular Index (Not Clustered)
+|  |  |  Index Columns:
+|  |  |  |  1: BOOK# (Ascending)
+|  |  #Columns = 0
+|  |  Skip Inserted Rows
+|  |  Avoid Locking Committed Data
+|  |  Currently Committed for Cursor Stability
+|  |  #Key Columns = 1
+|  |  |  Start Key: Inclusive Value
+|  |  |  |  1: ? 
+|  |  |  Stop Key: Inclusive Value
+|  |  |  |  1: ? 
+|  |  Index-Only Access
+|  |  Index Prefetch: Sequential(1), Readahead
+|  |  Lock Intents
+|  |  |  Table: Intent Share
+|  |  |  Row  : Next Key Share
+|  |  Sargable Index Predicate(s)
+|  |  |  Return Data to Application
+|  |  |  |  #Columns = 1
+Return Data Completion
+
+End of section
+
+
+Optimizer Plan:
+
+          Rows   
+        Operator 
+          (ID)   
+          Cost   
+                
+        2610.99 
+        RETURN  
+         ( 1)   
+        824.459 
+          |     
+        2610.99 
+        NLJOIN  
+         ( 2)   
+        824.459 
+       /       \---\
+ 13.0586            * 
+ TBSCAN            |           
+  ( 3)           39661         
+ 646.586  Index:               
+   |      STL                  
+ 50000    PURCHASE_BOOK#_INDEX 
+ Table: 
+ STL    
+ BOOK   
+
+
+

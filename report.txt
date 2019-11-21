@@ -1,0 +1,31 @@
+Tipping Point Report (using stl)
+
+Submitted By: 
+
+name: Christopher Cosentino
+studentId: 214916035
+eecsAcc: chriscos
+
+name: Kirill Kresling
+studentId:
+eecsAcc: 
+
+2.
+The difference between A and B is that one query evaluates equality 
+operators and the other compares using greater than (>) operators. 
+Using the equality operator, this reduces the reduction factor significantly. 
+
+
+3. 
+The difference between A and B is that one query is returning all Book#'s 
+with price > 10 and the other returns Book#'s with price equaling a certain value.
+
+When evaluating the price equaling a certain value it uses a index nested loop
+join because ...***, the other query uses hash join because ...***.
+
+4. 
+
+The difference between A and B is that...
+
+
+5. 
